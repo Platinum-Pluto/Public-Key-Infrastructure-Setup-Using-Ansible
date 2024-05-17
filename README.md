@@ -14,7 +14,7 @@
 
 **Table of Contents**
 
-- [Ansible Setup](##ansible-setup)
+- [Ansible Setup](#ansible-setup)
   - [Installation](#installation)
   - [Ansible Configuration](#ansible-configuration)
 - [Server VM Configuration](#server-vm-configuration)
