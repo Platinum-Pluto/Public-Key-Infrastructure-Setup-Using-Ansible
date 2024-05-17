@@ -43,7 +43,7 @@
 - [Some Useful Links](#some-useful-links)
 - [End](#end)
 
-#Ansible Setup
+##Ansible Setup
 ###Installation
 First we need to install Ansible for using the playbook for setting up our PKI
 Open a new terminal and use the following commands to setup ansible
