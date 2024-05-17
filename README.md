@@ -12,9 +12,6 @@
 ![](/images/icon.PNG)
 
 
-
-**Table of Contents**
-
 **Table of Contents**
 
 - [Ansible Setup](#ansible-setup)
@@ -122,20 +119,20 @@ To run the setup.yaml ansible playbook navigate to your folder in which you clon
 #Server VM Configuration
 ###IPv4 configuration
 Go to Settings in your virtual machine and click on Network
-![Alt text](images/1.png)
+![Alt text](images/1.PNG)
 
 Now click on ipv4 and configure it as shown below
-![Alt text](images/2.png)
+![Alt text](images/2.PNG)
 
 ###Network Adapter configuration
 First go to settings of your virtual machine
-![Alt text](images/3.png)
+![Alt text](images/3.PNG)
 
 Then go to Network 
-![Alt text](images/4.png)
+![Alt text](images/4.PNG)
 
 After that, change the network adapter from NAT to Host-only Adapter
-![Alt text](images/5.png)
+![Alt text](images/5.PNG)
 
 
 > ⚠️ **Warning:** You might have to reboot the virtual machine afterwards after the onfiguration using the command ` reboot` in terminal
@@ -223,19 +220,19 @@ Edit the $USER for declaring proper path for the CA files
 First install Chrome browser if not installed. 
 
 1. Then open chrome and go to settings.
-![Alt text](images/ch1.png)
+![Alt text](images/ch1.PNG)
 
 2. After that click on Privacy and Security 
-![Alt text](images/ch2.png)
+![Alt text](images/ch2.PNG)
 
 3. Click on Security 
-![Alt text](images/ch3.png)
+![Alt text](images/ch3.PNG)
 
 4. Click on Manage Certificates
-![Alt text](images/ch4.png)
+![Alt text](images/ch4.PNG)
 
 5. Click on Authorities and import the rootCA.crt file
-![Alt text](images.ch5.png)
+![Alt text](images.ch5.PNG)
 
 
 
