@@ -43,8 +43,8 @@
 - [Some Useful Links](#some-useful-links)
 - [End](#end)
 
-##Ansible Setup
-###Installation
+## Ansible Setup
+### Installation
 First we need to install Ansible for using the playbook for setting up our PKI
 Open a new terminal and use the following commands to setup ansible
 
@@ -62,14 +62,14 @@ Write the configuration below in the hosts file
 [host_Username]  
 localhost ansible_connections=local
 ```
-###Ansible configuration
+### Ansible configuration
 Open the setup.yaml file using
 
 `sudo nano setup.yaml`
 
 Change the host to your virtual machine host. And change the user to your virtual machine host.
 
-####Ansible
+#### Ansible
 
 ```yaml
 ---
@@ -116,15 +116,15 @@ To run the setup.yaml ansible playbook navigate to your folder in which you clon
 
 
 
-#Server VM Configuration
-###IPv4 configuration
+# Server VM Configuration
+### IPv4 configuration
 Go to Settings in your virtual machine and click on Network
 ![Alt text](images/1.PNG)
 
 Now click on ipv4 and configure it as shown below
 ![Alt text](images/2.PNG)
 
-###Network Adapter configuration
+### Network Adapter configuration
 First go to settings of your virtual machine
 ![Alt text](images/3.PNG)
 
@@ -138,7 +138,7 @@ After that, change the network adapter from NAT to Host-only Adapter
 > ⚠️ **Warning:** You might have to reboot the virtual machine afterwards after the onfiguration using the command ` reboot` in terminal
 
 
-#Database Setup
+# Database Setup
 Log in to PostgreSQL as the default superuser (usually postgres)
 
 ` sudo -u postgres psql`
@@ -158,25 +158,25 @@ Do the same process for vss, cm and other websites.
 #Apache2 Configuration
 After running the ansible-playbook do the following 
 
-###Enabling sites
+### Enabling sites
 ` sudo a2ensite cnn.conf`
 ` sudo a2ensite vss.conf`
 ` sudo a2ensite cm.conf`
 
 These commands will enable the sites based on the .conf files of the websites.
-###Restarting apache2 after enabling sites
+### Restarting apache2 after enabling sites
 ` sudo apachectl restart` or,
 ` sudo systemctl restart apache2`
 
 These commands are used for restarting the apache2 for the configurations of the websites. Both of them have the same functionality. 
 
-###Check apache2 status
+### Check apache2 status
 Use the command below to check the status of apache2 to see if apache2 service is active.
 
 `sudo systemctl status apache2` or,
 ` sudo apachectl status`
 
-#Bind9 Configuration
+# Bind9 Configuration
 For bind9 change the server virtual machine host name to ns1 and  just restarting the bind9 service should be enough.
 
 To change hostname:
@@ -188,7 +188,7 @@ To restart bind9:
 To check if bind9 is active:
 ` sudo systemctl status bind9`
 
-#Openssl Configuration
+# Openssl Configuration
 After cloing this repository change the hostname in the .conf files to your virtual machine hostname.
 
 `sudo nano AcmeRootCA.conf.j2`
@@ -216,7 +216,7 @@ Edit the $USER for declaring proper path for the CA files
 `sudo nano command_3.sh`
 
 
-#Importing the RootCA certificate in Chrome browser
+# Importing the RootCA certificate in Chrome browser
 First install Chrome browser if not installed. 
 
 1. Then open chrome and go to settings.
@@ -236,8 +236,8 @@ First install Chrome browser if not installed.
 
 
 
-#Additional Configurations & Commands
-###OCSP Responder
+# Additional Configurations & Commands
+### OCSP Responder
 Navigate to the ca folder 
 
 ` cd /home/Your_Hostname/ca`
@@ -248,7 +248,7 @@ Open a new terminal and run the following command
 openssl ocsp -index AcmeSubCATwo/index -port 9999 -rsigner ocsp/certs/ocsp.crt -rkey ocsp/private/ocsp.key -CA AcmeSubCATwo/certs/ca.crt -text
 ```
 
-###Revocation of a Certificate
+### Revocation of a Certificate
 First open the AcmeSubCATwo index file using 
 
 ` cat /home/HostName/ca/AcmeSubCATwo/index`
@@ -264,7 +264,7 @@ openssl ca -config AcmeSubCATwo/AcmeSubCATwo.conf -revoke AcmeSubCATwo/newcerts/
 This will revoke the certificate of the specific website.
 
 
-###Python CSR Autosigner
+### Python CSR Autosigner
 Open a new terminal and run the following command
 ` sudo python3 testing.py`
 This will start the python backend code that will sign the csr whenever a csr is posted on the CA website.
@@ -281,7 +281,7 @@ This will start the python backend code that will sign the csr whenever a csr is
 - **<u>Step-6:</u>** Python deletes the entry from the postgresql table after the task is finished.
 - **<u>Step-7:</u>** CA website points to the specific directory from which the signed certificate can be downloaded.
 
-###UFW To Stop Attacks
+### UFW To Stop Attacks
 ` sudo ufw deny ip_address`
 ` sudo systemctl restart ufw`
 
@@ -289,8 +289,8 @@ First the attacker IP address which was observed from the snort is blocked and t
 
 
 
-###Setting up Snort for detection
-####Configuration
+### Setting up Snort for detection
+#### Configuration
 After installing snort we need to configure the snort.conf file and make the changes below:
 First open the snort.conf file using
 ` sudo nano /etc/snort/snort.conf`
@@ -304,7 +304,7 @@ Comment out the portvar FTP_PORTS [21,2100,353553] because it creates an error a
 Then finally in the for the portvar HTTP_PORTS add your available ports here in which you would like to detect the attacks.
 ![Alt text](images/s3.png)
 
-####Start Snort
+#### Start Snort
 Now we will run the following command in the terminal:
 
 ` sudo snort -A console -c /etc/snort/snort.conf`
@@ -312,30 +312,30 @@ Now we will run the following command in the terminal:
 This will start the snort service and keep on detecting any attacks that comes to the server.
 
 
-###UI Preview
-####CNN Website UI
+### UI Preview
+#### CNN Website UI
 ![Alt text](images/CNN_Website.PNG)
 
-####VSS Website UI
+#### VSS Website UI
 ![Alt text](images/VSS_Website.PNG)
 
-####CA Website UI
+#### CA Website UI
 ![Alt text](images/CA_Website.PNG)
 
-###Client Configuration
-####Client DNS Configuration
+### Client Configuration
+#### Client DNS Configuration
 ![Client DNS Configuration](images/client_DNS.PNG)
 
-####Installations
+#### Installations
 ` sudo apt install hping3 wireshark`
 
-####Hping3 attack
+#### Hping3 attack
 For example:
 `sudo hping3 -S --flood -V -p 443 www.cnn.com or 192.168.56.101`
 
 Here S means the SYN and –S –flood basically means SYN Flood attack on –p which is port and let’s say port 443 and then ip address or website address.
 
-####Wireshark TLS Handshake & Encrypted Application Data
+#### Wireshark TLS Handshake & Encrypted Application Data
 Open wireshark
 
 ` sudo wireshark`
@@ -343,7 +343,7 @@ Open wireshark
 Start capturing packets and then visit the website from the client and then after visiting the website, stop capturing the packets and then filter in wireshark using `ip.addr==192.168.56.101` to verify the TLS handshake and see if the application data is encrypted.
 
 
-###Some Useful Links
+### Some Useful Links
 
 - [How To Install the Apache Web Server on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04)
 
@@ -362,5 +362,5 @@ Start capturing packets and then visit the website from the client and then afte
 
 
 
-###End
+### End
 Thank you for the visit!!! 😊😊😊
