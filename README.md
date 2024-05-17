@@ -15,9 +15,36 @@
 
 **Table of Contents**
 
-[TOCM]
+**Table of Contents**
 
-[TOC]
+- [Ansible Setup](#ansible-setup)
+  - [Installation](#installation)
+  - [Ansible Configuration](#ansible-configuration)
+- [Server VM Configuration](#server-vm-configuration)
+  - [IPv4 Configuration](#ipv4-configuration)
+  - [Network Adapter Configuration](#network-adapter-configuration)
+- [Database Setup](#database-setup)
+- [Apache2 Configuration](#apache2-configuration)
+  - [Enabling Sites](#enabling-sites)
+  - [Restarting Apache2](#restarting-apache2-after-enabling-sites)
+  - [Checking Apache2 Status](#check-apache2-status)
+- [Bind9 Configuration](#bind9-configuration)
+- [OpenSSL Configuration](#openssl-configuration)
+- [Importing the RootCA Certificate in Chrome Browser](#importing-the-rootca-certificate-in-chrome-browser)
+- [Additional Configurations & Commands](#additional-configurations--commands)
+  - [OCSP Responder](#ocsp-responder)
+  - [Revocation of a Certificate](#revocation-of-a-certificate)
+  - [Python CSR Autosigner](#python-csr-autosigner)
+  - [UFW to Stop Attacks](#ufw-to-stop-attacks)
+  - [Setting up Snort for Detection](#setting-up-snort-for-detection)
+  - [UI Preview](#ui-preview)
+- [Client Configuration](#client-configuration)
+  - [Client DNS Configuration](#client-dns-configuration)
+  - [Installations](#installations)
+  - [Hping3 Attack](#hping3-attack)
+  - [Wireshark TLS Handshake & Encrypted Application Data](#wireshark-tls-handshake--encrypted-application-data)
+- [Some Useful Links](#some-useful-links)
+- [End](#end)
 
 #Ansible Setup
 ###Installation
