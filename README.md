@@ -217,7 +217,6 @@ Edit the $USER for declaring proper path for the CA files
 
 
 # Importing the RootCA certificate in Chrome browser
-First install Chrome browser if not installed. 
 
 1. Then open chrome and go to settings.
 ![Alt text](images/ch1.PNG)
