@@ -1,0 +1,31 @@
+---
+- name: Installing and setting up packages on Ubuntu 22.04 LTS
+  hosts: host username will be here
+  become: yes
+  become_user: root
+
+  vars:
+      user: "path to repository folder"
+  tasks:
+  - name: Installing required packages
+    apt:
+      name:
+        - apache2
+        - bind9
+        - bind9utils
+        - php-pgsql
+        - openssl
+        - ufw
+        - tree
+        - php
+        - libapache2-mod-php
+      force_apt_get: yes
+
+  - name: Run shell commands for webserver setup
+    ansible.builtin.shell: {{user}}/command_1.sh
+
+  - name: Run shell commands for DNS setup
+    ansible.builtin.shell: {{user}}/command_2.sh
+
+  - name: Run shell commands for openssl CA setup
+    ansible.builtin.shell: {{user}}/command_3.sh

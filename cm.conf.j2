@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+        ServerName cm.com
+        ServerAlias www.cm.com
+        Redirect permanent / https://cm.com
+</VirtualHost>
+
+<VirtualHost _default_:443>
+        ServerAdmin webmaster@localhost
+        ServerName cm.com
+        ServerAlias www.cm.com
+        DocumentRoot /var/www/cm
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        SSLEngine on
+        SSLCertificateFile /etc/ssl/certs/cm.crt
+        SSLCertificateKeyFile /etc/ssl/certs/cm.key
+        SSLCertificateChainFile /etc/ssl/certs/AcmeSubCATwo.crt
+        SSLUseStapling on
+        SSLStaplingResponderTimeout 5
+        SSLStaplingReturnResponderErrors on
+
+</VirtualHost>
+
+SSLStaplingCache shmcb:/var/run/ocsp(128000)
+

@@ -1,0 +1,168 @@
+import subprocess
+import time
+import psycopg2
+
+
+def execute_command(command):
+	try:
+		result = subprocess.run(command, shell=True)
+
+		print("Output:")
+		if result.stderr:
+			print("Errors:")
+			print(result.stderr)
+	except subprocess.CalledProcessError as e:
+		print(f"Error executing command '{command}' : {e}")
+
+
+
+def checker(dbname, username, table_name, password, host, port):
+        try:
+                con = psycopg2.connect(dbname = dbname, user = username, password = password, host = host, port = port)
+                cur = con.cursor()
+                cur.execute(f"SELECT COUNT(*) FROM {table_name};")
+                rows = cur.fetchall()
+                cur.close()
+                con.close()
+                print("CHECKER")
+                print(int(rows[0][0]))
+                return int(rows[0][0])
+        except psycopg2.Error as e:
+                print("ERROR connecting to PostgreSQL:", e)
+                return None
+
+
+
+
+def get_name(dbname, username, table_name, password, host, port):
+	try:
+		con = psycopg2.connect(dbname = dbname, user = username, password = password, host = host, port = port)
+		cur = con.cursor()
+		cur.execute(f"SELECT name FROM {table_name};")
+		rows = cur.fetchall()
+		cur.close()
+		con.close()
+		print("GET_NAME")
+		print(rows[0][0])
+		return rows[0][0]
+	except psycopg2.Error as e:
+		print("ERROR connecting to PostgreSQL:", e)
+		return None
+
+
+
+
+
+def get_dns(dbname, username, table_name, password, host, port):
+        try:
+                con = psycopg2.connect(dbname = dbname, user = username, password = password, host = host, port = port)
+                cur = con.cursor()
+                cur.execute(f"SELECT position FROM {table_name};")
+                rows = cur.fetchall()
+                cur.close()
+                con.close()
+                print("GET_DNS")
+                print(rows[0][0])
+                return rows[0][0]
+        except psycopg2.Error as e:
+                print("ERROR connecting to PostgreSQL:", e)
+                return None
+
+
+
+
+def delete_DB(dbname, username, table_name, password, host, port):
+        try:
+                con = psycopg2.connect(dbname = dbname, user = username, password = password, host = host, port = port)
+                cur = con.cursor()
+                cur.execute("DELETE FROM data;")
+                con.commit()
+                cur.close()
+                con.close()
+                print("DELETE DB")
+        except psycopg2.Error as e:
+                print("ERROR connecting to PostgreSQL:", e)
+
+
+
+
+
+def save_pem(dbname, username, table_name, password, host, port):
+        try:
+                con = psycopg2.connect(dbname = dbname, user = username, password = password, host = host, port = port)
+                cur = con.cursor()
+                cur.execute(f"SELECT ver FROM data;")
+                resume_content = cur.fetchone()[0]
+                con.commit()
+                cur.close()
+                con.close()
+                print("File saved")
+                print(resume_content)
+                return resume_content
+                
+        except psycopg2.Error as e:
+                print("ERROR connecting to PostgreSQL:", e)
+                return e
+
+
+
+
+
+
+db_name = "cm"
+username = "postgres"
+table_name = "data"
+password = "postgres"
+host = "localhost"
+port = '5432'
+host_Username = ""
+
+
+while True:
+	data_count = checker(db_name, username, table_name, password, host, port)
+	if data_count is not None:
+		if data_count > 0: 
+			filename = get_name(db_name, username, table_name, password, host, port)
+			save_file = f"/home/{host_Username}/Desktop/{filename}"
+
+			#save_pem(db_name, username, table_name, password, host, port, save_file)
+			dns = get_dns(db_name, username, table_name, password, host, port)
+			altNames = f"DNS.1 = {dns}, DNS.2 = www.{dns}"
+
+
+			first = f"sudo touch /home/{host_Username}/Desktop/temp.csr"
+			execute_command(first)
+			execute_command(f"sudo chmod 777 /home/{host_Username}/Desktop/temp.csr")
+
+			data = save_pem(db_name, username,"data", password, host, port)
+			path = f"/home/{host_Username}/Desktop/temp.csr"
+			with open(path,"wb") as file:
+				file.write(data.encode('utf-8'))
+
+
+
+			third = f"openssl ca -config /var/www/cm/AcmeSubCATwoSigner.conf -in /home/{host_Username}/Desktop/temp.csr -out /var/www/cm/temp.crt -extensions server_cert -days 365 -notext -md sha256 -passin pass:phrase -batch"
+			execute_command(third)
+
+			per = "sudo chmod 777 /var/www/cm/temp.crt"
+			execute_command(per)
+
+			fourth = f"sudo rm /home/{host_Username}/Desktop/temp.csr"
+			execute_command(fourth)
+
+
+
+			delete_DB(db_name, username, table_name, password, host, port)
+			#command_2 = f"psql -d {db_name} -U {username} -c \"DELETE FROM {table_name};\""
+			#execute_command(command_2)
+
+			data_count = None
+
+		else:
+			print("Empty")
+	else:
+		print("Database is empty")
+
+ 
+	time.sleep(1)
+
