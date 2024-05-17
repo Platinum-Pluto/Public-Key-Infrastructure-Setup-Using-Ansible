@@ -232,7 +232,7 @@ First install Chrome browser if not installed.
 ![Alt text](images/ch4.PNG)
 
 5. Click on Authorities and import the rootCA.crt file
-![Alt text](images.ch5.PNG)
+![Alt text](images/ch5.PNG)
 
 
 
