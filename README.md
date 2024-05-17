@@ -217,20 +217,20 @@ Edit the $USER for declaring proper path for the CA files
 
 
 # Importing the RootCA certificate in Chrome browser
-
-1. Then open chrome and go to settings.
+1. First install Chrome if not installed in Ubuntu 22.04lts
+2. Then open chrome and go to settings.
 ![Alt text](images/ch1.PNG)
 
-2. After that click on Privacy and Security 
+3. After that click on Privacy and Security 
 ![Alt text](images/ch2.PNG)
 
-3. Click on Security 
+4. Click on Security 
 ![Alt text](images/ch3.PNG)
 
-4. Click on Manage Certificates
+5. Click on Manage Certificates
 ![Alt text](images/ch4.PNG)
 
-5. Click on Authorities and import the rootCA.crt file
+6. Click on Authorities and import the rootCA.crt file
 ![Alt text](images/ch5.PNG)
 
 
