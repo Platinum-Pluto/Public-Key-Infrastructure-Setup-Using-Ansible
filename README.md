@@ -135,7 +135,7 @@ After that, change the network adapter from NAT to Host-only Adapter
 ![Alt text](images/5.PNG)
 
 
-> ⚠️ **Warning:** You might have to reboot the virtual machine afterwards after the onfiguration using the command ` reboot` in terminal
+> ⚠️ **Warning:** You might have to reboot the virtual machine afterwards after the configuration using the command ` reboot` in terminal
 
 
 # Database Setup
